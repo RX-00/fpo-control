@@ -63,8 +63,22 @@ if [[ ! -f $SENTINEL_FILE ]]; then
   pip install "opencv-python==4.9.0.80" "numba==0.61.2" \
     "websockets==15.0.1" "wandb==0.25.1" "viser==1.0.24"
 
+  # Download robot description files for whole_body_tracking
+  WBT_ASSETS="$SCRIPT_DIR/thirdparty/whole_body_tracking/source/whole_body_tracking/whole_body_tracking/assets"
+  if [ ! -d "$WBT_ASSETS/unitree_description" ]; then
+    curl -L -o /tmp/unitree_description.tar.gz \
+      https://storage.googleapis.com/qiayuanl_robot_descriptions/unitree_description.tar.gz
+    tar -xzf /tmp/unitree_description.tar.gz -C "$WBT_ASSETS/"
+    rm /tmp/unitree_description.tar.gz
+  fi
+
   # Our packages
-  pip install -e ./isaaclab_fpo
+  pip install -e ./isaaclab_fpo \
+    -e ./thirdparty/whole_body_tracking/source/whole_body_tracking
+
+  # Download LAFAN1 motion data and convert to NPZ via IsaacSim FK
+  export OMNI_KIT_ACCEPT_EULA=YES
+  python $SCRIPT_DIR/whole_body_tracking_reference_data/download_lafan_data.py --headless
 
   touch $SENTINEL_FILE
 fi

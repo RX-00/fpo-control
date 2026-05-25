@@ -94,6 +94,7 @@ from isaaclab.utils.io import dump_pickle, dump_yaml
 from isaaclab_fpo import FpoRslRlOnPolicyRunnerCfg, FpoRslRlVecEnvWrapper
 
 import isaaclab_tasks  # noqa: F401
+import whole_body_tracking  # noqa: F401 — registers motion tracking envs
 from isaaclab_tasks.utils import get_checkpoint_path
 from isaaclab_tasks.utils.parse_cfg import parse_env_cfg
 

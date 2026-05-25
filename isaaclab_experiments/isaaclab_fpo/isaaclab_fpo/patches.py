@@ -9,6 +9,11 @@ Patches applied to isaaclab.utils.dict.update_class_from_dict:
 from collections.abc import Iterable, Mapping
 
 
+def _is_missing(obj):
+    """Check if obj is a dataclasses MISSING sentinel (robust against module reloading)."""
+    return type(obj).__name__ == "_MISSING_TYPE"
+
+
 def apply_isaaclab_patches():
     """Apply monkey-patches to isaaclab.utils.dict at import time."""
     import isaaclab.utils.dict as dict_module
@@ -47,8 +52,8 @@ def apply_isaaclab_patches():
                     value = float(value)
                 elif isinstance(value, int) and isinstance(obj_mem, float):
                     value = float(value)  # W&B sends ints for float params
-                elif obj_mem is None:
-                    value = value  # allow setting values on None-initialized fields
+                elif obj_mem is None or _is_missing(obj_mem):
+                    value = value  # allow setting values on None/MISSING-initialized fields
                 elif isinstance(value, type(obj_mem)) or value is None:
                     pass
                 else:

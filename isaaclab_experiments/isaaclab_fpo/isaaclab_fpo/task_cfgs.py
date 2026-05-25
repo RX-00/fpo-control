@@ -91,6 +91,38 @@ class G1FlatFlowPPORunnerCfg(FpoRslRlOnPolicyRunnerCfg):
 
 
 # ---------------------------------------------------------------------------
+# Motion tracking (G1 humanoid, whole-body)
+# ---------------------------------------------------------------------------
+
+
+@configclass
+class G1FlatMotionTrackingFlowPPORunnerCfg(FpoRslRlOnPolicyRunnerCfg):
+    """G1 whole-body motion tracking: 20k iters, no action clipping, ASPO."""
+
+    num_steps_per_env = 48
+    max_iterations = 20000
+    save_interval = 500
+    clip_actions = None  # No action clipping for tracking (PD targets can exceed joint limits)
+    experiment_name = "g1_flat_motion_tracking"
+    policy = FpoRslRlPpoActorCriticCfg(
+        actor_hidden_dims=[1024, 512, 256],
+        critic_hidden_dims=[1024, 512, 256],
+        activation="elu",
+        cfm_loss_reduction="mean",
+        action_perturb_std=0.1,
+    )
+    algorithm = FpoRslRlPpoAlgorithmCfg(
+        clip_param=0.01,
+        num_mini_batches=6,
+        schedule="adaptive",
+        trust_region_mode="aspo",
+        cfm_loss_clamp=3.0,
+        cfm_diff_clamp_max=3.0,
+        advantage_clamp=(5.0, 5.0),
+    )
+
+
+# ---------------------------------------------------------------------------
 # Cartpole (direct env, useful for quick debugging)
 # ---------------------------------------------------------------------------
 
@@ -142,6 +174,8 @@ TASK_CONFIGS = {
     "Isaac-Velocity-Flat-H1-Play-v0": H1FlatFlowPPORunnerCfg,
     "Isaac-Velocity-Flat-G1-v0": G1FlatFlowPPORunnerCfg,
     "Isaac-Velocity-Flat-G1-Play-v0": G1FlatFlowPPORunnerCfg,
+    # Motion tracking
+    "Tracking-Flat-G1-v0": G1FlatMotionTrackingFlowPPORunnerCfg,
     # Direct envs
     "Isaac-Cartpole-Direct-v0": CartpoleFlowPPORunnerCfg,
 }
