@@ -12,3 +12,8 @@ from .utils import (
     string_to_callable,
     unpad_trajectories,
 )
+from .condition_mask import (
+    add_conditioning_args,
+    apply_conditioning_cli_overrides,
+    resolve_condition_joint_indices,
+)

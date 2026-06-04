@@ -103,6 +103,24 @@ class FpoRslRlPpoActorCriticCfg:
     Perturbs actions with random noise, which can be interpreted as an entropy
     regularizer."""
 
+    condition_mode: Literal["full", "root", "root_hands"] = "full"
+    """Actor conditioning mask mode. Default "full" preserves current behavior."""
+
+    condition_drop_ratio: float = 0.0
+    """Deterministic condition mask ratio. Only 0.0 and 1.0 are currently supported."""
+
+    condition_joint_names: list[str] | None = None
+    """Robot joint names to keep in root_hands mode. Resolved to indices before runner construction."""
+
+    condition_joint_indices: list[int] | None = None
+    """Robot joint indices to keep in root_hands mode."""
+
+    condition_include_command_vel: bool = True
+    """Whether root_hands mode keeps matching command velocity entries."""
+
+    condition_mask_debug: bool = False
+    """Print condition mask resolution details."""
+
 
 ############################
 # Algorithm configurations #

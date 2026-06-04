@@ -37,6 +37,21 @@ class ActorCritic(nn.Module):
         self.cfm_loss_t_inverse_cdf_beta = cfg.cfm_loss_t_inverse_cdf_beta
         self.sampling_steps = cfg.sampling_steps
         self.cfm_loss_reduction = cfg.cfm_loss_reduction
+        self.condition_mode = cfg.condition_mode
+        self.condition_drop_ratio = cfg.condition_drop_ratio
+        self.condition_include_command_vel = cfg.condition_include_command_vel
+        if self.condition_mode not in ("full", "root", "root_hands"):
+            raise ValueError(f"Unknown condition_mode: {self.condition_mode}")
+        if self.condition_drop_ratio not in (0.0, 1.0):
+            raise ValueError(
+                "Stochastic condition dropout is not supported yet. "
+                "Use condition_drop_ratio=0.0 or 1.0."
+            )
+        self.register_buffer(
+            "condition_mask",
+            self._build_condition_mask(num_actor_obs, cfg),
+            persistent=False,
+        )
 
         # Inference parameters
         self.actor_scale = cfg.actor_scale
@@ -107,6 +122,13 @@ class ActorCritic(nn.Module):
 
         print(f"Actor MLP: {self.actor}")
         print(f"Critic MLP: {self.critic}")
+        if self.condition_drop_ratio > 0.0 or cfg.condition_mask_debug:
+            kept = int(self.condition_mask.sum().item())
+            print(
+                "[INFO] Actor condition mask: "
+                f"mode={self.condition_mode}, drop_ratio={self.condition_drop_ratio}, "
+                f"kept_obs={kept}/{num_actor_obs}"
+            )
 
         # Compile the inner flow integration loop for CUDA graph replay.
         # Cached CUDA graph can lead to a 3~9x speedup.
@@ -138,6 +160,8 @@ class ActorCritic(nn.Module):
         t_current = full_t_path[:-1]
         t_next = full_t_path[1:]
         dt = t_next - t_current
+
+        observations = self._apply_condition_mask(observations)
 
         # Use compiled integration loop for CUDA graph replay speedup
         x_t = self._compiled_integrate_flow(
@@ -178,6 +202,7 @@ class ActorCritic(nn.Module):
         assert observations.shape[0] == batch_dims, (
             "actor_obs and actions should have the same batch size"
         )
+        observations = self._apply_condition_mask(observations)
 
         # Scale actions to match the scaled action space used during inference
         # During inference, we output self.actor_scale * x_t, so during training
@@ -220,6 +245,54 @@ class ActorCritic(nn.Module):
         out = torch.cat([torch.cos(scaled_t), torch.sin(scaled_t)], dim=-1)
         assert out.shape == (*t.shape[:-1], self.timestep_embed_dim)
         return out
+
+    def _build_condition_mask(
+        self, num_actor_obs: int, cfg: FpoRslRlPpoActorCriticCfg
+    ) -> torch.Tensor:
+        mask = torch.ones(1, num_actor_obs)
+        if cfg.condition_drop_ratio <= 0.0 or cfg.condition_mode == "full":
+            return mask
+        if num_actor_obs != 160:
+            raise ValueError(
+                "Sparse condition masking currently expects the Tracking-Flat-G1-v0 "
+                f"160-D actor observation layout, got num_actor_obs={num_actor_obs}."
+            )
+
+        command_pos_start = 0
+        command_vel_start = 29
+        command_dim = 29
+        mask[:, command_pos_start : command_pos_start + command_dim] = 0.0
+        mask[:, command_vel_start : command_vel_start + command_dim] = 0.0
+
+        if cfg.condition_mode == "root":
+            return mask
+        if not cfg.condition_joint_indices:
+            raise ValueError(
+                "condition_mode='root_hands' requires condition_joint_names or "
+                "condition_joint_indices. Pass explicit arm/wrist joints for this robot."
+            )
+
+        invalid = [
+            index
+            for index in cfg.condition_joint_indices
+            if index < 0 or index >= command_dim
+        ]
+        if invalid:
+            raise ValueError(
+                "condition_joint_indices out of command range: "
+                f"{invalid}. Valid range is [0, {command_dim - 1}]."
+            )
+
+        for index in cfg.condition_joint_indices:
+            mask[:, command_pos_start + index] = 1.0
+            if cfg.condition_include_command_vel:
+                mask[:, command_vel_start + index] = 1.0
+        return mask
+
+    def _apply_condition_mask(self, observations: torch.Tensor) -> torch.Tensor:
+        if self.condition_drop_ratio <= 0.0 or self.condition_mode == "full":
+            return observations
+        return observations * self.condition_mask
 
     def _integrate_flow(
         self,
@@ -321,6 +394,8 @@ class ActorCritic(nn.Module):
         t_current = full_t_path[:-1]
         t_next = full_t_path[1:]
         dt = t_next - t_current
+
+        observations = self._apply_condition_mask(observations)
 
         # Use compiled integration loop for CUDA graph replay speedup
         x_t = self._compiled_integrate_flow(

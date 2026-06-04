@@ -29,6 +29,11 @@ parser.add_argument(
     help="Use the pre-trained checkpoint from Nucleus.",
 )
 parser.add_argument("--real-time", action="store_true", default=False, help="Run in real-time, if possible.")
+parser.add_argument("--condition-mode", choices=("full", "root", "root_hands"), default=None, help="Actor condition-mask mode.")
+parser.add_argument("--condition-drop-ratio", type=float, default=None, help="Condition mask ratio. Use 0.0 or 1.0.")
+parser.add_argument("--condition-joint-names", nargs="+", default=None, help="Joint names to keep for root_hands conditioning.")
+parser.add_argument("--condition-joint-indices", nargs="+", type=int, default=None, help="Joint indices to keep for root_hands conditioning.")
+parser.add_argument("--motion-file", type=str, default=None, help="Override env.commands.motion.motion_file for playback.")
 # append FPO cli arguments
 cli_args.add_fpo_args(parser)
 # append AppLauncher cli args
@@ -50,10 +55,12 @@ import time
 import torch
 
 from isaaclab_fpo.runners import OnPolicyRunner
+from isaaclab_fpo.utils import apply_conditioning_cli_overrides, resolve_condition_joint_indices
 
 from isaaclab.envs import DirectMARLEnv, multi_agent_to_single_agent
 from isaaclab.utils.assets import retrieve_file_path
 from isaaclab.utils.dict import print_dict
+from isaaclab.utils.io import load_pickle
 from isaaclab.utils.pretrained_checkpoint import get_published_pretrained_checkpoint
 
 from isaaclab_fpo import FpoRslRlOnPolicyRunnerCfg, FpoRslRlVecEnvWrapper, export_policy_as_jit, export_policy_as_onnx
@@ -90,12 +97,32 @@ def main():
 
     log_dir = os.path.dirname(resume_path)
 
+    # Prefer the saved configs from the training run. This preserves task
+    # overrides such as env.commands.motion.motion_file for tracking policies.
+    agent_pkl_path = os.path.join(log_dir, "params", "agent.pkl")
+    env_pkl_path = os.path.join(log_dir, "params", "env.pkl")
+    if os.path.exists(agent_pkl_path):
+        print(f"[INFO] Loading agent config from: {agent_pkl_path}")
+        agent_cfg = load_pickle(agent_pkl_path)
+    if os.path.exists(env_pkl_path):
+        print(f"[INFO] Loading environment config from: {env_pkl_path}")
+        env_cfg = load_pickle(env_pkl_path)
+        if args_cli.num_envs is not None:
+            env_cfg.scene.num_envs = args_cli.num_envs
+        if args_cli.device is not None:
+            env_cfg.sim.device = args_cli.device
+        env_cfg.sim.use_fabric = not args_cli.disable_fabric
+
+    apply_conditioning_cli_overrides(agent_cfg, env_cfg, args_cli)
+
     # create isaac environment
     env = gym.make(args_cli.task, cfg=env_cfg, render_mode="rgb_array" if args_cli.video else None)
 
     # convert to single-agent instance if required by the RL algorithm
     if isinstance(env.unwrapped, DirectMARLEnv):
         env = multi_agent_to_single_agent(env)
+
+    resolve_condition_joint_indices(env, agent_cfg)
 
     # wrap for video recording
     if args_cli.video:

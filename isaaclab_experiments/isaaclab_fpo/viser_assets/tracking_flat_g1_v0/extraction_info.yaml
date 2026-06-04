@@ -1,0 +1,168 @@
+metadata:
+  task: Tracking-Flat-G1-v0
+  generated: 2026-06-04 17:06:00 UTC
+  extractor: isaac_asset_extractor.py
+  source: whole_body_tracking_g1_urdf
+  urdf: /home/roy/fpo-control/isaaclab_experiments/thirdparty/whole_body_tracking/source/whole_body_tracking/whole_body_tracking/assets/unitree_description/urdf/g1/main.urdf
+summary:
+  moving_bodies: 30
+  mesh_mappings: 30
+  total_vertices: 196612
+  total_faces: 393270
+  total_size_bytes: 7116008
+  total_size_mb: 6.786
+meshes:
+  pelvis:
+    filename: meshes/pelvis.glb
+    vertices: 28671
+    faces: 57318
+    size_bytes: 1032676
+  left_ankle_pitch_link:
+    filename: meshes/left_ankle_pitch_link.glb
+    vertices: 714
+    faces: 1422
+    size_bytes: 27016
+  left_ankle_roll_link:
+    filename: meshes/left_ankle_roll_link.glb
+    vertices: 6543
+    faces: 13066
+    size_bytes: 236696
+  left_elbow_link:
+    filename: meshes/left_elbow_link.glb
+    vertices: 900
+    faces: 1774
+    size_bytes: 33448
+  left_hip_pitch_link:
+    filename: meshes/left_hip_pitch_link.glb
+    vertices: 1811
+    faces: 3632
+    size_bytes: 66696
+  left_hip_roll_link:
+    filename: meshes/left_hip_roll_link.glb
+    vertices: 1925
+    faces: 3842
+    size_bytes: 70580
+  left_hip_yaw_link:
+    filename: meshes/left_hip_yaw_link.glb
+    vertices: 2980
+    faces: 5924
+    size_bytes: 108220
+  left_knee_link:
+    filename: meshes/left_knee_link.glb
+    vertices: 8558
+    faces: 17096
+    size_bytes: 309208
+  left_shoulder_pitch_link:
+    filename: meshes/left_shoulder_pitch_link.glb
+    vertices: 1770
+    faces: 3534
+    size_bytes: 65052
+  left_shoulder_roll_link:
+    filename: meshes/left_shoulder_roll_link.glb
+    vertices: 4004
+    faces: 8004
+    size_bytes: 145492
+  left_shoulder_yaw_link:
+    filename: meshes/left_shoulder_yaw_link.glb
+    vertices: 2492
+    faces: 4982
+    size_bytes: 91080
+  left_wrist_pitch_link:
+    filename: meshes/left_wrist_pitch_link.glb
+    vertices: 861
+    faces: 1718
+    size_bytes: 31884
+  left_wrist_roll_link:
+    filename: meshes/left_wrist_roll_link.glb
+    vertices: 3563
+    faces: 7122
+    size_bytes: 129152
+  left_wrist_yaw_link:
+    filename: meshes/left_wrist_yaw_link.glb
+    vertices: 26064
+    faces: 52120
+    size_bytes: 939012
+  right_ankle_pitch_link:
+    filename: meshes/right_ankle_pitch_link.glb
+    vertices: 714
+    faces: 1422
+    size_bytes: 27020
+  right_ankle_roll_link:
+    filename: meshes/right_ankle_roll_link.glb
+    vertices: 6547
+    faces: 13074
+    size_bytes: 236844
+  right_elbow_link:
+    filename: meshes/right_elbow_link.glb
+    vertices: 889
+    faces: 1774
+    size_bytes: 33320
+  right_hip_pitch_link:
+    filename: meshes/right_hip_pitch_link.glb
+    vertices: 1807
+    faces: 3624
+    size_bytes: 66556
+  right_hip_roll_link:
+    filename: meshes/right_hip_roll_link.glb
+    vertices: 1930
+    faces: 3852
+    size_bytes: 70764
+  right_hip_yaw_link:
+    filename: meshes/right_hip_yaw_link.glb
+    vertices: 2980
+    faces: 5924
+    size_bytes: 108224
+  right_knee_link:
+    filename: meshes/right_knee_link.glb
+    vertices: 8532
+    faces: 17044
+    size_bytes: 308280
+  right_shoulder_pitch_link:
+    filename: meshes/right_shoulder_pitch_link.glb
+    vertices: 1770
+    faces: 3534
+    size_bytes: 65056
+  right_shoulder_roll_link:
+    filename: meshes/right_shoulder_roll_link.glb
+    vertices: 4020
+    faces: 8036
+    size_bytes: 146072
+  right_shoulder_yaw_link:
+    filename: meshes/right_shoulder_yaw_link.glb
+    vertices: 2500
+    faces: 4998
+    size_bytes: 91372
+  right_wrist_pitch_link:
+    filename: meshes/right_wrist_pitch_link.glb
+    vertices: 797
+    faces: 1590
+    size_bytes: 29584
+  right_wrist_roll_link:
+    filename: meshes/right_wrist_roll_link.glb
+    vertices: 3562
+    faces: 7120
+    size_bytes: 129124
+  right_wrist_yaw_link:
+    filename: meshes/right_wrist_yaw_link.glb
+    vertices: 25353
+    faces: 50680
+    size_bytes: 913200
+  torso_link:
+    filename: meshes/torso_link.glb
+    vertices: 37451
+    faces: 74930
+    size_bytes: 1349376
+  waist_roll_link:
+    filename: meshes/waist_roll_link.glb
+    vertices: 858
+    faces: 1716
+    size_bytes: 32280
+  waist_yaw_link:
+    filename: meshes/waist_yaw_link.glb
+    vertices: 6046
+    faces: 12398
+    size_bytes: 222724
+notes:
+- Visual meshes are exported in each Isaac moving body frame.
+- Fixed child visuals, such as head_link and rubber hands, are baked into their nearest
+  moving parent body.

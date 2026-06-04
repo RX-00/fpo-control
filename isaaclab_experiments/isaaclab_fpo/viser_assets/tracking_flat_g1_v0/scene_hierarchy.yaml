@@ -1,0 +1,1576 @@
+metadata:
+  task: Tracking-Flat-G1-v0
+  generated: 2026-06-04 17:06:00 UTC
+  extractor: isaac_asset_extractor.py
+  source: whole_body_tracking_g1_urdf
+  urdf: /home/roy/fpo-control/isaaclab_experiments/thirdparty/whole_body_tracking/source/whole_body_tracking/whole_body_tracking/assets/unitree_description/urdf/g1/main.urdf
+  description: Minimal scene hierarchy for Viser playback
+  transform_type: body_local
+hierarchy:
+  /World:
+    type: Scope
+    parent: null
+    children:
+    - /World/envs
+    mesh_file: null
+    transform: null
+    is_instance: false
+    prototype_path: null
+  /World/envs:
+    type: Scope
+    parent: /World
+    children:
+    - /World/envs/env_0
+    mesh_file: null
+    transform: null
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0:
+    type: Xform
+    parent: /World/envs
+    children:
+    - /World/envs/env_0/Robot
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot:
+    type: Xform
+    parent: /World/envs/env_0
+    children:
+    - /World/envs/env_0/Robot/pelvis
+    - /World/envs/env_0/Robot/left_ankle_pitch_link
+    - /World/envs/env_0/Robot/left_ankle_roll_link
+    - /World/envs/env_0/Robot/left_elbow_link
+    - /World/envs/env_0/Robot/left_hip_pitch_link
+    - /World/envs/env_0/Robot/left_hip_roll_link
+    - /World/envs/env_0/Robot/left_hip_yaw_link
+    - /World/envs/env_0/Robot/left_knee_link
+    - /World/envs/env_0/Robot/left_shoulder_pitch_link
+    - /World/envs/env_0/Robot/left_shoulder_roll_link
+    - /World/envs/env_0/Robot/left_shoulder_yaw_link
+    - /World/envs/env_0/Robot/left_wrist_pitch_link
+    - /World/envs/env_0/Robot/left_wrist_roll_link
+    - /World/envs/env_0/Robot/left_wrist_yaw_link
+    - /World/envs/env_0/Robot/right_ankle_pitch_link
+    - /World/envs/env_0/Robot/right_ankle_roll_link
+    - /World/envs/env_0/Robot/right_elbow_link
+    - /World/envs/env_0/Robot/right_hip_pitch_link
+    - /World/envs/env_0/Robot/right_hip_roll_link
+    - /World/envs/env_0/Robot/right_hip_yaw_link
+    - /World/envs/env_0/Robot/right_knee_link
+    - /World/envs/env_0/Robot/right_shoulder_pitch_link
+    - /World/envs/env_0/Robot/right_shoulder_roll_link
+    - /World/envs/env_0/Robot/right_shoulder_yaw_link
+    - /World/envs/env_0/Robot/right_wrist_pitch_link
+    - /World/envs/env_0/Robot/right_wrist_roll_link
+    - /World/envs/env_0/Robot/right_wrist_yaw_link
+    - /World/envs/env_0/Robot/torso_link
+    - /World/envs/env_0/Robot/waist_roll_link
+    - /World/envs/env_0/Robot/waist_yaw_link
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/pelvis:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/pelvis/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/pelvis/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/pelvis
+    children: []
+    mesh_file: meshes/pelvis.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_ankle_pitch_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/left_ankle_pitch_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_ankle_pitch_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/left_ankle_pitch_link
+    children: []
+    mesh_file: meshes/left_ankle_pitch_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_ankle_roll_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/left_ankle_roll_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_ankle_roll_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/left_ankle_roll_link
+    children: []
+    mesh_file: meshes/left_ankle_roll_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_elbow_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/left_elbow_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_elbow_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/left_elbow_link
+    children: []
+    mesh_file: meshes/left_elbow_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_hip_pitch_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/left_hip_pitch_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_hip_pitch_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/left_hip_pitch_link
+    children: []
+    mesh_file: meshes/left_hip_pitch_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_hip_roll_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/left_hip_roll_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_hip_roll_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/left_hip_roll_link
+    children: []
+    mesh_file: meshes/left_hip_roll_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_hip_yaw_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/left_hip_yaw_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_hip_yaw_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/left_hip_yaw_link
+    children: []
+    mesh_file: meshes/left_hip_yaw_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_knee_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/left_knee_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_knee_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/left_knee_link
+    children: []
+    mesh_file: meshes/left_knee_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_shoulder_pitch_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/left_shoulder_pitch_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_shoulder_pitch_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/left_shoulder_pitch_link
+    children: []
+    mesh_file: meshes/left_shoulder_pitch_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_shoulder_roll_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/left_shoulder_roll_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_shoulder_roll_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/left_shoulder_roll_link
+    children: []
+    mesh_file: meshes/left_shoulder_roll_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_shoulder_yaw_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/left_shoulder_yaw_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_shoulder_yaw_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/left_shoulder_yaw_link
+    children: []
+    mesh_file: meshes/left_shoulder_yaw_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_wrist_pitch_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/left_wrist_pitch_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_wrist_pitch_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/left_wrist_pitch_link
+    children: []
+    mesh_file: meshes/left_wrist_pitch_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_wrist_roll_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/left_wrist_roll_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_wrist_roll_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/left_wrist_roll_link
+    children: []
+    mesh_file: meshes/left_wrist_roll_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_wrist_yaw_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/left_wrist_yaw_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/left_wrist_yaw_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/left_wrist_yaw_link
+    children: []
+    mesh_file: meshes/left_wrist_yaw_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_ankle_pitch_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/right_ankle_pitch_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_ankle_pitch_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/right_ankle_pitch_link
+    children: []
+    mesh_file: meshes/right_ankle_pitch_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_ankle_roll_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/right_ankle_roll_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_ankle_roll_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/right_ankle_roll_link
+    children: []
+    mesh_file: meshes/right_ankle_roll_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_elbow_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/right_elbow_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_elbow_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/right_elbow_link
+    children: []
+    mesh_file: meshes/right_elbow_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_hip_pitch_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/right_hip_pitch_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_hip_pitch_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/right_hip_pitch_link
+    children: []
+    mesh_file: meshes/right_hip_pitch_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_hip_roll_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/right_hip_roll_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_hip_roll_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/right_hip_roll_link
+    children: []
+    mesh_file: meshes/right_hip_roll_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_hip_yaw_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/right_hip_yaw_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_hip_yaw_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/right_hip_yaw_link
+    children: []
+    mesh_file: meshes/right_hip_yaw_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_knee_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/right_knee_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_knee_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/right_knee_link
+    children: []
+    mesh_file: meshes/right_knee_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_shoulder_pitch_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/right_shoulder_pitch_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_shoulder_pitch_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/right_shoulder_pitch_link
+    children: []
+    mesh_file: meshes/right_shoulder_pitch_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_shoulder_roll_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/right_shoulder_roll_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_shoulder_roll_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/right_shoulder_roll_link
+    children: []
+    mesh_file: meshes/right_shoulder_roll_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_shoulder_yaw_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/right_shoulder_yaw_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_shoulder_yaw_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/right_shoulder_yaw_link
+    children: []
+    mesh_file: meshes/right_shoulder_yaw_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_wrist_pitch_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/right_wrist_pitch_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_wrist_pitch_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/right_wrist_pitch_link
+    children: []
+    mesh_file: meshes/right_wrist_pitch_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_wrist_roll_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/right_wrist_roll_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_wrist_roll_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/right_wrist_roll_link
+    children: []
+    mesh_file: meshes/right_wrist_roll_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_wrist_yaw_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/right_wrist_yaw_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/right_wrist_yaw_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/right_wrist_yaw_link
+    children: []
+    mesh_file: meshes/right_wrist_yaw_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/torso_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/torso_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/torso_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/torso_link
+    children: []
+    mesh_file: meshes/torso_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/waist_roll_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/waist_roll_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/waist_roll_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/waist_roll_link
+    children: []
+    mesh_file: meshes/waist_roll_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/waist_yaw_link:
+    type: Xform
+    parent: /World/envs/env_0/Robot
+    children:
+    - /World/envs/env_0/Robot/waist_yaw_link/visuals
+    mesh_file: null
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null
+  /World/envs/env_0/Robot/waist_yaw_link/visuals:
+    type: Mesh
+    parent: /World/envs/env_0/Robot/waist_yaw_link
+    children: []
+    mesh_file: meshes/waist_yaw_link.glb
+    transform:
+    - - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 1.0
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 0.0
+      - 1.0
+    is_instance: false
+    prototype_path: null

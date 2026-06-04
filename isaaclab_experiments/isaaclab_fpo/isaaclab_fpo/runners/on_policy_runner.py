@@ -170,6 +170,11 @@ class OnPolicyRunner:
         privileged_obs = extras["observations"].get(self.privileged_obs_type, obs)
         obs, privileged_obs = obs.to(self.device), privileged_obs.to(self.device)
         self.train_mode()  # switch to train mode (for dropout for example)
+        obs = self.obs_normalizer(obs)
+        if self.privileged_obs_type is not None:
+            privileged_obs = self.privileged_obs_normalizer(privileged_obs)
+        else:
+            privileged_obs = obs
 
         # Book keeping
         ep_infos = []

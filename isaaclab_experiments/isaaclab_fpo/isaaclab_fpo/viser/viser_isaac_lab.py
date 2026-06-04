@@ -138,6 +138,13 @@ class ViserIsaacLab:
         self.show_velocity = True
         self.velocity_scale = 1.0  # Scale factor for velocity arrows
         self.envs_per_row = int(np.ceil(np.sqrt(max(1, self.num_envs))))
+        self.grid_offsets = self._compute_grid_offsets()
+
+        # Whole-body tracking target visualization. When a tracking env exposes a
+        # "motion" command term, these handles show the target body frames.
+        self.motion_command_term = None
+        self.show_motion_targets = True
+        self.motion_target_axes_handle = None
 
         # Scene setup
         self.server.scene.add_grid("/ground", plane="xy", width=500.0, height=500.0)
@@ -366,6 +373,10 @@ class ViserIsaacLab:
         # If multiple environments, create batched meshes
         if self.num_envs > 1:
             self._create_batched_meshes()
+
+        self.motion_command_term = self._get_motion_command_term(env)
+        if self.motion_command_term is not None:
+            self._create_motion_tracking_visualization()
 
         # Create velocity visualization for any number of environments
         if self.num_envs > 0:
@@ -630,6 +641,9 @@ class ViserIsaacLab:
         # Update velocity visualization
         if velocity_commands:
             self.update_velocity_visualization(env)
+
+        # Update whole-body tracking target frames when the env exposes them.
+        self.update_motion_tracking_visualization(env)
         
         # Update reward tracking and plot
         if rewards is not None:
@@ -722,6 +736,98 @@ class ViserIsaacLab:
 
         return colors
 
+    def _compute_grid_offsets(self) -> np.ndarray:
+        """Compute per-environment display offsets used by Viser."""
+        if self.random_offsets is not None:
+            offsets = np.asarray(self.random_offsets, dtype=np.float32)
+            if offsets.shape != (self.num_envs, 3):
+                raise ValueError(
+                    f"random_offsets must have shape ({self.num_envs}, 3), got {offsets.shape}"
+                )
+            return offsets.copy()
+
+        grid_size = int(np.ceil(np.sqrt(self.num_envs)))
+        offsets = np.zeros((self.num_envs, 3), dtype=np.float32)
+
+        max_row = (self.num_envs - 1) // grid_size
+        max_col = min(grid_size - 1, self.num_envs - 1)
+        center_x = max_col * self.env_spacing / 2
+        center_y = max_row * self.env_spacing / 2
+
+        for i in range(self.num_envs):
+            row = i // grid_size
+            col = i % grid_size
+            offsets[i, 0] = col * self.env_spacing - center_x
+            offsets[i, 1] = row * self.env_spacing - center_y
+        return offsets
+
+    def _get_motion_command_term(self, env):
+        """Return the whole-body tracking motion command term if present."""
+        if not hasattr(env, "command_manager") or not hasattr(env.command_manager, "get_term"):
+            return None
+        try:
+            term = env.command_manager.get_term("motion")
+        except (KeyError, AttributeError, TypeError):
+            return None
+
+        required_attrs = ("body_pos_relative_w", "body_quat_relative_w")
+        if all(hasattr(term, attr) for attr in required_attrs):
+            return term
+        return None
+
+    def _create_motion_tracking_visualization(self):
+        """Create batched target body frames for whole-body tracking tasks."""
+        if self.motion_command_term is None or self.motion_target_axes_handle is not None:
+            return
+
+        body_count = len(getattr(self.motion_command_term.cfg, "body_names", []))
+        if body_count == 0:
+            return
+
+        num_frames = self.num_envs * body_count
+        positions = np.zeros((num_frames, 3), dtype=np.float32)
+        wxyzs = np.tile(np.array([1.0, 0.0, 0.0, 0.0], dtype=np.float32), (num_frames, 1))
+
+        self.motion_target_axes_handle = self.server.scene.add_batched_axes(
+            name="/motion_tracking/target_body_frames",
+            batched_wxyzs=wxyzs,
+            batched_positions=positions,
+            axes_length=0.12,
+            axes_radius=0.004,
+            visible=self.show_motion_targets,
+        )
+        print(f"✅ Created motion target visualization for {self.num_envs} envs x {body_count} bodies")
+
+    def update_motion_tracking_visualization(self, env):
+        """Update whole-body tracking target body frames if available."""
+        if not self.show_motion_targets:
+            return
+
+        if self.motion_command_term is None:
+            self.motion_command_term = self._get_motion_command_term(env)
+            if self.motion_command_term is None:
+                return
+            self._create_motion_tracking_visualization()
+
+        if self.motion_target_axes_handle is None:
+            return
+
+        body_pos_w = self.motion_command_term.body_pos_relative_w[: self.num_envs]
+        body_quat_w = self.motion_command_term.body_quat_relative_w[: self.num_envs]
+
+        positions_world = body_pos_w.detach().cpu().numpy()
+        quaternions = body_quat_w.detach().cpu().numpy()
+
+        if hasattr(env.scene, "env_origins"):
+            env_origins = env.scene.env_origins[: self.num_envs].cpu().numpy()
+        else:
+            env_origins = np.zeros((self.num_envs, 3), dtype=np.float32)
+
+        positions_local = positions_world - env_origins[:, None, :] + self.grid_offsets[:, None, :]
+
+        self.motion_target_axes_handle.batched_positions = positions_local.reshape(-1, 3)
+        self.motion_target_axes_handle.batched_wxyzs = quaternions.reshape(-1, 4)
+
     def _create_velocity_visualization(self):
         """Create batched line segments for velocity visualization."""
         if self.num_envs == 0:
@@ -768,7 +874,10 @@ class ViserIsaacLab:
             env.command_manager, "get_command"
         ):
             # IsaacLab standard command manager
-            velocity_commands = env.command_manager.get_command("base_velocity")
+            try:
+                velocity_commands = env.command_manager.get_command("base_velocity")
+            except (KeyError, AttributeError, TypeError):
+                return
         elif hasattr(env, "commands"):
             # Direct commands attribute
             velocity_commands = env.commands
@@ -903,6 +1012,11 @@ class ViserIsaacLab:
                 step=0.1,
                 initial_value=self.velocity_scale,
             )
+
+            self.gui_show_motion_targets = self.server.gui.add_checkbox(
+                "Show Motion Targets",
+                initial_value=self.show_motion_targets,
+            )
             
         # All plots in one folder
         self.plots_folder = self.server.gui.add_folder("Plots")
@@ -998,6 +1112,31 @@ class ViserIsaacLab:
                 self.current_timestep = 0
                 print(f"🔄 Reset requested for all {self.num_envs} environments")
 
+        @self.gui_show_velocity.on_update
+        def _(event):
+            self.show_velocity = event.target.value
+            if self.velocity_lines_handle is not None:
+                self.velocity_lines_handle.visible = self.show_velocity
+
+        @self.gui_velocity_scale.on_update
+        def _(event):
+            self.velocity_scale = event.target.value
+
+        @self.gui_show_motion_targets.on_update
+        def _(event):
+            self.show_motion_targets = event.target.value
+            if self.motion_target_axes_handle is not None:
+                self.motion_target_axes_handle.visible = self.show_motion_targets
+
+        @self.gui_env_selector.on_update
+        def _(event):
+            self.selected_env_idx = int(event.target.value)
+            # Force update of plots with new selection
+            if len(self.reward_history) > 0:
+                self._update_reward_tracking(None)  # Update with existing data
+            if len(self.action_history) > 0:
+                self._update_action_tracking(None)  # Update with existing data
+
     def _update_stats_html(self):
         """Update the statistics HTML display."""
         stats_html = f"""
@@ -1033,27 +1172,6 @@ class ViserIsaacLab:
             # Update collision meshes
             for handle in self.body_idx_to_collision_handle.values():
                 handle.visible = show_collision
-
-        # Velocity visualization callbacks
-        @self.gui_show_velocity.on_update
-        def _(event):
-            self.show_velocity = event.target.value
-            if self.velocity_lines_handle is not None:
-                self.velocity_lines_handle.visible = self.show_velocity
-
-        @self.gui_velocity_scale.on_update
-        def _(event):
-            self.velocity_scale = event.target.value
-            
-        # Environment selector callback
-        @self.gui_env_selector.on_update
-        def _(event):
-            self.selected_env_idx = int(event.target.value)
-            # Force update of plots with new selection
-            if len(self.reward_history) > 0:
-                self._update_reward_tracking(None)  # Update with existing data
-            if len(self.action_history) > 0:
-                self._update_action_tracking(None)  # Update with existing data
 
     def _update_reward_tracking(self, rewards: Optional[torch.Tensor]):
         """Update reward history and plot.

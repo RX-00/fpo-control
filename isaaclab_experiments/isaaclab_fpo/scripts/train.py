@@ -83,6 +83,7 @@ import torch
 from datetime import datetime
 
 from isaaclab_fpo.runners import OnPolicyRunner
+from isaaclab_fpo.utils import resolve_condition_joint_indices
 
 from isaaclab.envs import (
     DirectMARLEnv,
@@ -210,6 +211,8 @@ def main():
     # convert to single-agent instance if required by the RL algorithm
     if isinstance(env.unwrapped, DirectMARLEnv):
         env = multi_agent_to_single_agent(env)
+
+    resolve_condition_joint_indices(env, agent_cfg)
 
     # save resume path before creating a new log_dir
     if agent_cfg.resume or agent_cfg.algorithm.class_name == "Distillation":
