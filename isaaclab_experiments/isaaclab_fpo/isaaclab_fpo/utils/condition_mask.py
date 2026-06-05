@@ -195,9 +195,10 @@ def _check_g1_lafan_joint_order(joint_names: list[str], env: Any) -> None:
     motion_file = getattr(motion_file, "motion_file", "")
     if set(joint_names) == set(G1_LAFAN_JOINT_NAMES):
         if joint_names != G1_LAFAN_JOINT_NAMES:
-            raise ValueError(
-                "Robot joint names match the G1 LAFAN set but not its canonical order. "
-                "The joint-command mask assumes command columns match robot joint order."
+            print(
+                "[INFO] Robot joint names match the G1 LAFAN set with robot-specific order. "
+                "Using robot joint order for condition_joint_names; generated LAFAN NPZ files "
+                "store full robot.data.joint_pos/joint_vel arrays in this order."
             )
         return
     if motion_file:
