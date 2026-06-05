@@ -1,4 +1,4 @@
-thirdparty
+thirdparty/miniconda3
 IsaacLab/_isaac_sim
 .env_setup_finished
 logs/
