@@ -10,7 +10,8 @@ import importlib
 import os
 import pathlib
 import torch
-from typing import Callable
+import types
+from typing import Any, Callable
 
 
 def resolve_nn_activation(act_name: str) -> torch.nn.Module:
@@ -89,6 +90,110 @@ def unpad_trajectories(trajectories, masks):
         .view(-1, trajectories.shape[0], trajectories.shape[-1])
         .transpose(1, 0)
     )
+
+
+def _repo_root_from_source() -> pathlib.Path:
+    for parent in pathlib.Path(__file__).resolve().parents:
+        if (parent / "isaaclab_experiments").is_dir():
+            return parent
+    return pathlib.Path(__file__).resolve().parents[4]
+
+
+def localize_saved_config_paths(
+    cfg: Any, repo_root: str | pathlib.Path | None = None
+) -> list[tuple[str, str]]:
+    """Remap stale absolute paths in a copied saved config to this checkout."""
+
+    repo_root_path = (
+        _repo_root_from_source()
+        if repo_root is None
+        else pathlib.Path(repo_root).expanduser().resolve()
+    )
+    remapped_paths: list[tuple[str, str]] = []
+    seen: set[int] = set()
+
+    def _remap_path_string(value: str) -> str:
+        if "://" in value:
+            return value
+
+        expanded_path = pathlib.Path(os.path.expandvars(os.path.expanduser(value)))
+        if not expanded_path.is_absolute() or expanded_path.exists():
+            return value
+
+        for marker in (
+            "isaaclab_experiments/",
+            "manipulation_experiments/",
+            "fpo-control/",
+        ):
+            marker_index = value.find(marker)
+            if marker_index == -1:
+                continue
+
+            if marker == "fpo-control/":
+                rel_path = value[marker_index + len(marker) :]
+            else:
+                rel_path = value[marker_index:]
+            candidate = repo_root_path / rel_path
+            if candidate.exists():
+                remapped_value = str(candidate)
+                remapped_paths.append((value, remapped_value))
+                return remapped_value
+
+        return value
+
+    def _visit(value: Any) -> Any:
+        if isinstance(value, str):
+            return _remap_path_string(value)
+        if isinstance(value, pathlib.Path):
+            return pathlib.Path(_remap_path_string(str(value)))
+        if isinstance(
+            value,
+            (
+                bytes,
+                int,
+                float,
+                bool,
+                torch.Tensor,
+                types.ModuleType,
+                types.FunctionType,
+                type,
+                type(None),
+            ),
+        ) or callable(value):
+            return value
+
+        value_id = id(value)
+        if value_id in seen:
+            return value
+        seen.add(value_id)
+
+        if isinstance(value, dict):
+            for key, item in list(value.items()):
+                value[key] = _visit(item)
+            return value
+        if isinstance(value, list):
+            for index, item in enumerate(value):
+                value[index] = _visit(item)
+            return value
+        if isinstance(value, tuple):
+            return tuple(_visit(item) for item in value)
+        if isinstance(value, set):
+            updated_items = {_visit(item) for item in value}
+            value.clear()
+            value.update(updated_items)
+            return value
+
+        if hasattr(value, "__dict__"):
+            for attr_name, attr_value in vars(value).items():
+                try:
+                    setattr(value, attr_name, _visit(attr_value))
+                except (AttributeError, TypeError):
+                    pass
+
+        return value
+
+    _visit(cfg)
+    return list(dict.fromkeys(remapped_paths))
 
 
 def store_code_state(logdir, repositories) -> list:

@@ -101,7 +101,11 @@ import torch
 import wandb
 
 from isaaclab_fpo.runners import OnPolicyRunner
-from isaaclab_fpo.utils import apply_conditioning_cli_overrides, resolve_condition_joint_indices
+from isaaclab_fpo.utils import (
+    apply_conditioning_cli_overrides,
+    localize_saved_config_paths,
+    resolve_condition_joint_indices,
+)
 
 from isaaclab.envs import DirectMARLEnv, multi_agent_to_single_agent
 from isaaclab.utils.assets import retrieve_file_path
@@ -250,6 +254,8 @@ def main():
     if os.path.exists(env_pkl_path):
         print(f"[INFO] Loading environment config from: {env_pkl_path}")
         env_cfg = load_pickle(env_pkl_path)
+        for old_path, new_path in localize_saved_config_paths(env_cfg):
+            print(f"[INFO] Remapped saved config path: {old_path} -> {new_path}")
         print(f"[INFO] Loaded config has num_envs: {env_cfg.scene.num_envs}")
         # Override some settings for playback
         if args_cli.num_envs is not None:
